@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         cells[j].textContent = value === 0 ? '' : value;
 
-        cells[j].className =
-          value === 0 ? 'field-cell' : `field-cell field-cell--${value}`;
+        cells[j].className
+          = value === 0 ? 'field-cell' : `field-cell field-cell--${value}`;
       }
     }
   }
