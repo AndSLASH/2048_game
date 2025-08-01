@@ -111,11 +111,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function handlePointerDown(event) {
+    if (!gameField.contains(event.target)) {
+      return;
+    }
+
     startX = event.clientX;
     startY = event.clientY;
   }
 
   function handlePointerUp(event) {
+    if (!gameField.contains(event.target)) {
+      return;
+    }
+
     if (!startX || !startY) {
       return;
     }
@@ -149,8 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
     startY = 0;
   }
 
-  gameField.addEventListener('pointerdown', handlePointerDown);
-  gameField.addEventListener('pointerup', handlePointerUp);
+  document.addEventListener('pointerdown', handlePointerDown);
+  document.addEventListener('pointerup', handlePointerUp);
 
   updateField();
   updateScore();

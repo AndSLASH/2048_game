@@ -8,6 +8,7 @@ body {
   font-family: sans-serif;
   font-size: 24px;
   font-weight: 900;
+  overscroll-behavior-y: none;
 }
 
 .field-cell {
@@ -79,9 +80,6 @@ body {
   background: #bbada0;
   border-spacing: 10px;
   border-radius: 5px;
-
-  // Запобігаємо pull-to-refresh тільки на ігровому полі
-  touch-action: none;
   user-select: none;
 }
 
