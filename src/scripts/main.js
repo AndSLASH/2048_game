@@ -112,7 +112,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.addEventListener('touchstart', (event) => {
-    event.preventDefault();
+    if (event.target.closest('.game-field')) {
+      event.preventDefault();
+    }
 
     const touch = event.touches[0];
 
@@ -121,11 +123,15 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.addEventListener('touchmove', (event) => {
-    event.preventDefault();
+    if (event.target.closest('.game-field')) {
+      event.preventDefault();
+    }
   });
 
   document.addEventListener('touchend', (event) => {
-    event.preventDefault();
+    if (event.target.closest('.game-field')) {
+      event.preventDefault();
+    }
 
     if (!startX || !startY || game.getStatus() !== 'playing') {
       return;
