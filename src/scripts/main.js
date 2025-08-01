@@ -101,7 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
     updateMessages();
   });
 
-  let startX, startY;
+  let startX = 0;
+  let startY = 0;
 
   function updateUI() {
     updateField();
@@ -110,38 +111,23 @@ document.addEventListener('DOMContentLoaded', () => {
     updateMessages();
   }
 
-  function handlePointerDown(event) {
-    if (!gameField.contains(event.target)) {
+  document.addEventListener('touchstart', (e) => {
+    const touch = e.touches[0];
+
+    startX = touch.clientX;
+    startY = touch.clientY;
+  });
+
+  document.addEventListener('touchend', (e) => {
+    if (!startX || !startY || game.getStatus() !== 'playing') {
       return;
     }
 
-    startX = event.clientX;
-    startY = event.clientY;
-  }
+    const touch = e.changedTouches[0];
+    const diffX = touch.clientX - startX;
+    const diffY = touch.clientY - startY;
 
-  function handlePointerUp(event) {
-    if (!gameField.contains(event.target)) {
-      return;
-    }
-
-    if (!startX || !startY) {
-      return;
-    }
-
-    if (game.getStatus() !== 'playing') {
-      return;
-    }
-
-    const endX = event.clientX;
-    const endY = event.clientY;
-    const diffX = endX - startX;
-    const diffY = endY - startY;
-    const minSwipeDistance = 50;
-
-    const isSwipeTooShort =
-      Math.abs(diffX) < minSwipeDistance && Math.abs(diffY) < minSwipeDistance;
-
-    if (isSwipeTooShort) {
+    if (Math.abs(diffX) < 30 && Math.abs(diffY) < 30) {
       return;
     }
 
@@ -152,13 +138,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     updateUI();
-
     startX = 0;
     startY = 0;
-  }
-
-  document.addEventListener('pointerdown', handlePointerDown);
-  document.addEventListener('pointerup', handlePointerUp);
+  });
 
   updateField();
   updateScore();
