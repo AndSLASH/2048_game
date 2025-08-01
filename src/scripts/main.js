@@ -111,11 +111,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function handlePointerDown(event) {
+    event.preventDefault(); // запобігає pull-to-refresh
     startX = event.clientX;
     startY = event.clientY;
   }
 
   function handlePointerUp(event) {
+    event.preventDefault();
+
     if (!startX || !startY) {
       return;
     }
