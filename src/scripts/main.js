@@ -104,24 +104,18 @@ document.addEventListener('DOMContentLoaded', () => {
   let startX, startY;
 
   function updateUI() {
-    if (game.getStatus() === 'playing') {
-      updateField();
-      updateScore();
-      updateButton();
-      updateMessages();
-    }
+    updateField();
+    updateScore();
+    updateButton();
+    updateMessages();
   }
 
-  document.addEventListener('touchstart', (event) => {
-    event.preventDefault();
+  function handlePointerDown(event) {
+    startX = event.clientX;
+    startY = event.clientY;
+  }
 
-    const firstTouch = event.touches[0];
-
-    startX = firstTouch.clientX;
-    startY = firstTouch.clientY;
-  });
-
-  document.addEventListener('touchend', (event) => {
+  function handlePointerUp(event) {
     if (!startX || !startY) {
       return;
     }
@@ -130,9 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const changedTouch = event.changedTouches[0];
-    const endX = changedTouch.clientX;
-    const endY = changedTouch.clientY;
+    const endX = event.clientX;
+    const endY = event.clientY;
     const diffX = endX - startX;
     const diffY = endY - startY;
     const minSwipeDistance = 50;
@@ -154,7 +147,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     startX = 0;
     startY = 0;
-  });
+  }
+
+  document.addEventListener('pointerdown', handlePointerDown);
+  document.addEventListener('pointerup', handlePointerUp);
 
   updateField();
   updateScore();
