@@ -111,14 +111,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function handlePointerDown(event) {
-    event.preventDefault(); // запобігає pull-to-refresh
     startX = event.clientX;
     startY = event.clientY;
   }
 
   function handlePointerUp(event) {
-    event.preventDefault();
-
     if (!startX || !startY) {
       return;
     }
@@ -152,8 +149,8 @@ document.addEventListener('DOMContentLoaded', () => {
     startY = 0;
   }
 
-  document.addEventListener('pointerdown', handlePointerDown);
-  document.addEventListener('pointerup', handlePointerUp);
+  gameField.addEventListener('pointerdown', handlePointerDown);
+  gameField.addEventListener('pointerup', handlePointerUp);
 
   updateField();
   updateScore();
