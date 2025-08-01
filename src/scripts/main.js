@@ -73,12 +73,12 @@ document.addEventListener('DOMContentLoaded', () => {
     updateMessages();
   });
 
-  document.addEventListener('keydown', (e) => {
+  document.addEventListener('keydown', (event) => {
     if (game.getStatus() !== 'playing') {
       return;
     }
 
-    switch (e.key) {
+    switch (event.key) {
       case 'ArrowLeft':
         game.moveLeft();
         break;
@@ -111,19 +111,27 @@ document.addEventListener('DOMContentLoaded', () => {
     updateMessages();
   }
 
-  document.addEventListener('touchstart', (e) => {
-    const touch = e.touches[0];
+  document.addEventListener('touchstart', (event) => {
+    event.preventDefault();
+
+    const touch = event.touches[0];
 
     startX = touch.clientX;
     startY = touch.clientY;
   });
 
-  document.addEventListener('touchend', (e) => {
+  document.addEventListener('touchmove', (event) => {
+    event.preventDefault();
+  });
+
+  document.addEventListener('touchend', (event) => {
+    event.preventDefault();
+
     if (!startX || !startY || game.getStatus() !== 'playing') {
       return;
     }
 
-    const touch = e.changedTouches[0];
+    const touch = event.changedTouches[0];
     const diffX = touch.clientX - startX;
     const diffY = touch.clientY - startY;
 
