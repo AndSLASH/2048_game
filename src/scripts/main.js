@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         cells[j].textContent = value === 0 ? '' : value;
 
-        cells[j].className
-          = value === 0 ? 'field-cell' : `field-cell field-cell--${value}`;
+        cells[j].className =
+          value === 0 ? 'field-cell' : `field-cell field-cell--${value}`;
       }
     }
   }
@@ -99,6 +99,59 @@ document.addEventListener('DOMContentLoaded', () => {
     updateScore();
     updateButton();
     updateMessages();
+  });
+
+  let startX, startY;
+
+  function updateUI() {
+    if (game.getStatus() === 'playing') {
+      updateField();
+      updateScore();
+      updateButton();
+      updateMessages();
+    }
+  }
+
+  document.addEventListener('touchstart', (event) => {
+    const firstTouch = event.touches[0];
+
+    startX = firstTouch.clientX;
+    startY = firstTouch.clientY;
+  });
+
+  document.addEventListener('touchend', (event) => {
+    if (!startX || !startY) {
+      return;
+    }
+
+    if (game.getStatus() !== 'playing') {
+      return;
+    }
+
+    const changedTouch = event.changedTouches[0];
+    const endX = changedTouch.clientX;
+    const endY = changedTouch.clientY;
+    const diffX = endX - startX;
+    const diffY = endY - startY;
+    const minSwipeDistance = 50;
+
+    const isSwipeTooShort =
+      Math.abs(diffX) < minSwipeDistance && Math.abs(diffY) < minSwipeDistance;
+
+    if (isSwipeTooShort) {
+      return;
+    }
+
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+      diffX > 0 ? game.moveRight() : game.moveLeft();
+    } else {
+      diffY > 0 ? game.moveDown() : game.moveUp();
+    }
+
+    updateUI();
+
+    startX = 0;
+    startY = 0;
   });
 
   updateField();

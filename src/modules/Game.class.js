@@ -14,9 +14,7 @@ class Game {
   }
 
   moveLeft() {
-    if (!this.canMoveLeft()) {
-      return;
-    }
+    const previousState = this.getState();
 
     for (let i = 0; i < this.state.length; i++) {
       const row = this.state[i];
@@ -45,14 +43,14 @@ class Game {
       this.state[i] = final;
     }
 
-    this.addRandomCell();
-    this.updateStatus();
+    if (this.hasStateChanged(previousState)) {
+      this.addRandomCell();
+      this.updateStatus();
+    }
   }
 
   moveRight() {
-    if (!this.canMoveRight()) {
-      return;
-    }
+    const previousState = this.getState();
 
     for (let i = 0; i < this.state.length; i++) {
       const row = this.state[i];
@@ -83,14 +81,14 @@ class Game {
       this.state[i] = final;
     }
 
-    this.addRandomCell();
-    this.updateStatus();
+    if (this.hasStateChanged(previousState)) {
+      this.addRandomCell();
+      this.updateStatus();
+    }
   }
 
   moveUp() {
-    if (!this.canMoveUp()) {
-      return;
-    }
+    const previousState = this.getState();
 
     for (let j = 0; j < 4; j++) {
       const column = this.state.map((row) => row[j]);
@@ -121,14 +119,14 @@ class Game {
       }
     }
 
-    this.addRandomCell();
-    this.updateStatus();
+    if (this.hasStateChanged(previousState)) {
+      this.addRandomCell();
+      this.updateStatus();
+    }
   }
 
   moveDown() {
-    if (!this.canMoveDown()) {
-      return;
-    }
+    const previousState = this.getState();
 
     for (let j = 0; j < 4; j++) {
       const column = this.state.map((row) => row[j]);
@@ -161,8 +159,10 @@ class Game {
       }
     }
 
-    this.addRandomCell();
-    this.updateStatus();
+    if (this.hasStateChanged(previousState)) {
+      this.addRandomCell();
+      this.updateStatus();
+    }
   }
 
   getScore() {
@@ -246,86 +246,6 @@ class Game {
     }
 
     return true;
-  }
-
-  canMoveLeft() {
-    for (let i = 0; i < this.state.length; i++) {
-      const row = this.state[i];
-
-      for (let j = 1; j < row.length; j++) {
-        if (row[j] !== 0 && row[j - 1] === 0) {
-          return true;
-        }
-      }
-
-      for (let j = 0; j < row.length - 1; j++) {
-        if (row[j] !== 0 && row[j] === row[j + 1]) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
-  canMoveRight() {
-    for (let i = 0; i < this.state.length; i++) {
-      const row = this.state[i];
-
-      for (let j = 0; j < row.length - 1; j++) {
-        if (row[j] !== 0 && row[j + 1] === 0) {
-          return true;
-        }
-      }
-
-      for (let j = 0; j < row.length - 1; j++) {
-        if (row[j] !== 0 && row[j] === row[j + 1]) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
-  canMoveUp() {
-    for (let j = 0; j < 4; j++) {
-      const column = this.state.map((row) => row[j]);
-
-      for (let i = 1; i < column.length; i++) {
-        if (column[i] !== 0 && column[i - 1] === 0) {
-          return true;
-        }
-      }
-
-      for (let i = 0; i < column.length - 1; i++) {
-        if (column[i] !== 0 && column[i] === column[i + 1]) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
-  canMoveDown() {
-    for (let j = 0; j < 4; j++) {
-      const column = this.state.map((row) => row[j]);
-
-      for (let i = 0; i < column.length - 1; i++) {
-        if (column[i] !== 0 && column[i + 1] === 0) {
-          return true;
-        }
-      }
-
-      for (let i = 0; i < column.length - 1; i++) {
-        if (column[i] !== 0 && column[i] === column[i + 1]) {
-          return true;
-        }
-      }
-    }
-
-    return false;
   }
 
   hasStateChanged(previousState) {

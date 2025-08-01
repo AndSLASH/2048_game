@@ -1,4 +1,7 @@
 {
   "singleAttributePerLine": true,
-  "htmlWhitespaceSensitivity": "ignore"
+  "htmlWhitespaceSensitivity": "ignore",
+  "singleQuote": true,
+  "printWidth": 80,
+  "breakBeforeElse": false
 }
