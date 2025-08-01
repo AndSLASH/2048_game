@@ -113,6 +113,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.addEventListener('touchstart', (event) => {
+    event.preventDefault();
+
     const firstTouch = event.touches[0];
 
     startX = firstTouch.clientX;
